@@ -1,0 +1,12 @@
+#
+pages:
+ image: node:14
+ stage: deploy
+ script:
+  - npm i
+  - nmp run build
+  - mv build public
+ artifacts:
+  paths:
+   - public
+ 
