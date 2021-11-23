@@ -1,14 +1,16 @@
 import React from 'react';
 import axios from 'axios';
+import Card from '../Gard';
+import './Gallery.sass';
+
 // компонент галереи
 // запрашивать информацию при render 
 class Gallery extends React.Component {
-
     constructor() {
         super()
         this.state = {
             images: [],
-            loaded: false
+            loaded: true
         }
     }
 
@@ -19,12 +21,20 @@ class Gallery extends React.Component {
         })
         this.setState({
             images: images.data,
-            loaded: true
+            loaded: false
         })
 
     }
 
     render() {
+        const CardList = this.state.images.map(img => {
+            return <Card
+                key={img.id}
+                img_link={img.download_url}
+                author={img.author}
+                url={img.url}
+            />
+        })
         if (this.state.loaded) {
             return <div>Идет загрузка</div>
 
@@ -32,8 +42,10 @@ class Gallery extends React.Component {
         else {
             return (
                 <div>
-                    <h1>Gellery</h1>
-                    <img src="{this.state.images[0].download_url}" alt="" witdth="400"/>
+                    <h1>Gallery</h1>
+                    <div className="gallery_wrapper">
+                        {CardList}
+                    </div>
                 </div>
             )
         }
